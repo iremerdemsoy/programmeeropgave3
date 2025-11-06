@@ -8,17 +8,46 @@ class LightOutSpel {
     int bordBreedte = 6;
     bool deWereld[20][20]{};
     char leesEnkelKarakter() {
-        char ingelezenKarakter = cin.get();
-        char hoofdletter = static_cast<char>(toupper(ingelezenKarakter)); //maakt het hoofdletter
-        return hoofdletter;
+        char ingelezenKarakter;
+        do {
+            ingelezenKarakter = toupper(cin.get());
+        } while (ingelezenKarakter == '\n' && (ingelezenKarakter >= 'A' || ingelezenKarakter <= 'Z'));
+        return ingelezenKarakter;
     }
 
     void toonParametersMenu() {
 
     }
 
+    void pasVolgStrategietoe() {
+
+    }
+
+    void PasLosStrategieToe() {
+
+    }
+
+    void PasSpeelStrategieToe() {
+
+    }
+
+    void PasZetStrategieToe() {
+
+    }
+
     void toonPuzzelMenu() {
-        while (true)
+        while (true) {
+            toonHuidigeBord();
+            cout << "[T]erug [V]olg [L]os 5x5 [S]peel oplossing [Z]et doen: \n";
+            char gebruikerskeuze = leesEnkelKarakter();
+
+            if (gebruikerskeuze == 'T') break;
+            if (gebruikerskeuze == 'V') pasVolgStrategietoe();
+            if (gebruikerskeuze == 'L') PasLosStrategieToe();
+            if (gebruikerskeuze == 'S') PasSpeelStrategieToe();
+            if (gebruikerskeuze == 'Z') PasZetStrategieToe();
+
+        }
 
     }
 
