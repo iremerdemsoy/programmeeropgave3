@@ -19,7 +19,31 @@ class LightOutSpel {
 
     }
 
+    void wisselLampEnBurenOm(int rij, int kolom) {
+        if (rij < 0 || rij >= bordHoogte || kolom < 0 || kolom >= bordBreedte) return;
+        toggle (rij, kolom);
+        toggle(rij - 1, kolom);
+        toggle(rij + 1, kolom);
+        toggle(rij, kolom - 1);
+        toggle(rij, kolom + 1);
+
+    }
+
+    void toggle (int rij, int kolom){
+        if (rij < 0 || rij >= bordHoogte || kolom < 0 || kolom >= bordBreedte) return;
+        deWereld[rij][kolom] = !deWereld[rij][kolom];
+    }
+
     void pasVolgStrategietoe() {
+        for (int huidigeRij = bordHoogte - 1; huidigeRij > 0; --huidigeRij){
+            for (int huidigeKolom = 0; huidigeKolom < bordBreedte; huidigeKolom++){
+                if (deWereld[huidigeRij][huidigeKolom] == true) {
+                    int onderDeHuidigeRij = huidigeRij - 1;
+                    wisselLampEnBurenOm(onderDeHuidigeRij, huidigeKolom);
+                    toonHuidigeBord();
+                }
+            }
+        }
 
     }
 
