@@ -4,9 +4,11 @@ using namespace std;
 
 class LightOutSpel {
 
-    int bordHoogte = 4;
-    int bordBreedte = 6;
+    int bordHoogte = 5;
+    int bordBreedte = 5;
     bool deWereld[20][20]{};
+    bool oplossing[20][20]{};
+    int totaalAantalZetten;
     char leesEnkelKarakter() {
         char ingelezenKarakter;
         do {
@@ -48,14 +50,63 @@ class LightOutSpel {
     }
 
     void PasLosStrategieToe() {
-
+        if (bordHoogte != 5 || bordBreedte != 5) {
+            cout << "Alleen mogelijk op een 5x5 bord!\n";
+            return;
+        }
+        pasVolgStrategietoe();
+        for (int huidigeKolom = 0; huidigeKolom < bordBreedte; ++huidigeKolom) {
+            if (deWereld[0][huidigeKolom]) {
+                wisselLampEnBurenOm(1, huidigeKolom);
+                toonHuidigeBord();
+            }
+        }
+        pasVolgStrategietoe();
     }
 
     void PasSpeelStrategieToe() {
-
+        for (int huidigeRij = 0; huidigeRij < bordHoogte; ++huidigeRij) {
+            for (int huidigeKolom = 0; huidigeKolom < bordBreedte; ++huidigeKolom) {
+                if (oplossing[huidigeRij][huidigeKolom]) {
+                    wisselLampEnBurenOm(huidigeRij, huidigeKolom);
+                    toonHuidigeBord();
+                }
+            }
+        }
     }
 
-    void PasZetStrategieToe() {
+    int leesGetalMetMaximum(int maximumToegestaneWaarde) {
+        string verzameldeCijfers;
+        char ingelezenKarakter;
+
+        while ((ingelezenKarakter = cin.get()) != '\n') {
+            if (ingelezenKarakter >= '0' && ingelezenKarakter <= '9') {
+                verzameldeCijfers += ingelezenKarakter;
+            }
+        }
+
+        int resultaatGetal = 0;
+        for (char cijferKarakter : verzameldeCijfers) {
+            resultaatGetal = resultaatGetal * 10 + (cijferKarakter - '0');
+            if (resultaatGetal > maximumToegestaneWaarde) {
+                resultaatGetal = maximumToegestaneWaarde;
+            }
+        }
+        return resultaatGetal > 0 ? resultaatGetal : 1;
+    }
+
+    void PasZetToe() {
+            cout << "Positie (bijv. A1): ";
+            char ingevoerdeKolomLetter = leesEnkelKarakter();
+            int ingevoerdeRijNummer = leesGetalMetMaximum(bordHoogte) - 1;
+            int berekendeKolomIndex = ingevoerdeKolomLetter - 'A';
+
+            if (ingevoerdeRijNummer >= 0 && ingevoerdeRijNummer < bordHoogte &&
+                berekendeKolomIndex >= 0 && berekendeKolomIndex < bordBreedte) {
+                wisselLampEnBurenOm(ingevoerdeRijNummer, berekendeKolomIndex);
+            } else {
+                cout << "Ongeldige positie!\n";
+            }
 
     }
 
@@ -69,7 +120,7 @@ class LightOutSpel {
             if (gebruikerskeuze == 'V') pasVolgStrategietoe();
             if (gebruikerskeuze == 'L') PasLosStrategieToe();
             if (gebruikerskeuze == 'S') PasSpeelStrategieToe();
-            if (gebruikerskeuze == 'Z') PasZetStrategieToe();
+            if (gebruikerskeuze == 'Z') PasZetToe();
 
         }
 
