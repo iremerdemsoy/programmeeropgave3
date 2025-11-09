@@ -1,9 +1,11 @@
 //In dit programma kan de gebruiker het spel LightsOut spelen via een
 //menu-systeem. De gebruiker kan kiezen uit een aantal mogelijkheden.
-//er zijn 3 submenus die weer leiden naar naar enkele nieuwe opties.
-//gebruikte compiler: Apple clang version 17.0.0 (clang -1700.0.13.5)
+//Er zijn 3 submenus die weer leiden naar enkele nieuwe opties.
+//Gebruikte compiler: Apple clang version 17.0.0 (clang -1700.0.13.5)
 //Target: arm64-apple-darwin24.6.0
 //Thread model: posix
+//Makers: Irem Erdemsoy, Anass Zaamari
+//Datum: 10 november 2025
 
 #include <iostream>
 #include<ctime>
@@ -53,7 +55,7 @@ class LightOutSpel {
         cout << "waarin er weer enkele opties zijn." << endl;
         cout << "datum: 10 november 2025" << endl;
     }
-
+// functie toont het parameter menu
     void toonParametersMenu(){
         while (true) {
             toonHuidigeBord();
@@ -69,17 +71,19 @@ class LightOutSpel {
             if (gebruikerskeuze == 'E') PasPenAan();
         }
     }//toonParametersMenu
-
+// functie past hoogte aan
     void PasHoogteAan(){
         cout << "Nieuwe hoogte (1-20): ";
         int nieuweHoogte = leesGetalMetMaximum(20);
         bordHoogte = nieuweHoogte;
     }//PasHoogteAan
+    // functie past breedte aan
     void PasBreedteAan(){
         cout << "Nieuwe breedte (1-20): ";
         int nieuweBreedte = leesGetalMetMaximum(20);
         bordBreedte = nieuweBreedte;
     }//PasBreedteAan
+    // functie past percentage aan
     void PasPercentageAan(){
         cout << "Percentage is nu " << LampPercentage << "%" << endl;
         cout << "Nieuwe percentage (1-100): ";
@@ -87,8 +91,9 @@ class LightOutSpel {
         LampPercentage = nieuwePercentage;
     }//PasPercentageAan
     void PasKarakterAan(){//Switch de lampen
-        lampAan = '.';
-        lampUit = '#';
+        char oudKarakter = lampAan;
+        lampAan = lampUit;
+        lampUit = oudKarakter;
     }//PasKarakterAan
     void PasTorusAan(){
         cout << "Torus is nu " << (isTorus ? "aan" : "uit") << endl;
@@ -257,7 +262,7 @@ class LightOutSpel {
         int AanTeZettenLampen = (HoeveelheidLampen * LampPercentage) / 100;
         int geplaatsteLampen = 0;
 
-        cout << "Placing " << AanTeZettenLampen << " random lamps..." << endl;
+        cout << AanTeZettenLampen << " lampen aan zetten." << endl;
 
         while (geplaatsteLampen < AanTeZettenLampen) {
             int randomRij = randomgetal() % bordHoogte;
